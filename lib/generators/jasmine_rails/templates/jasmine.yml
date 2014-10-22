@@ -1,7 +1,7 @@
 # path to parent directory of src_files
 # relative path from Rails.root
 # defaults to app/assets/javascripts
-src_dir: "app/assets/javascripts"
+src_dir: "app/assets/javascript"
 
 # path to additional directory of source file that are not part of assets pipeline and need to be included
 # relative path from Rails.root
@@ -53,3 +53,8 @@ tmp_dir: "tmp/jasmine"
 # (optional)
 #support_dir: "spec/javascripts/support"
 #boot_script: "rjs-boot.js"
+
+
+#blanket.js coverage
+include_filter: "//.*/"
+exclude_filter: ""

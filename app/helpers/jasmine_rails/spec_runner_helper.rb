@@ -51,5 +51,13 @@ module JasmineRails
     def jasmine2?
       Jasmine::Core.respond_to?(:boot_files)
     end
+
+    def coverage_exclude_filter
+      JasmineRails.coverage_exclude_filter
+    end
+
+    def coverage_include_filter
+      JasmineRails.coverage_include_filter
+    end
   end
 end

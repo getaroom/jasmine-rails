@@ -50,6 +50,14 @@ module JasmineRails
       reporters.values_at(*types).compact.flatten
     end
 
+    def coverage_include_filter
+      jasmine_config['include_filter'] || '//.*/'
+    end
+
+    def coverage_exclude_filter
+      jasmine_config['exclude_filter'] || ''
+    end
+
     # returns list of all files to be included into the jasmine testsuite
     # includes:
     # * application src_files
