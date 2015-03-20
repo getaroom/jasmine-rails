@@ -3,11 +3,15 @@ require 'jasmine_rails/offline_asset_paths'
 module JasmineRails
   module Runner
     class << self
+      PHANTOMJS_VERSION = ['>= 1.8.1', '< 3.0']
+      PHANTOMJS_NAME    = 'phantomjs'
       # Run the Jasmine testsuite via phantomjs CLI
       # raises an exception if any errors are encountered while running the testsuite
       def run(spec_filter = nil, reporters = 'console')
-        require 'phantomjs'
+        # require 'phantomjs'
+        require 'cliver'
         require 'fileutils'
+        phantom_path = Cliver::detect!(PHANTOMJS_NAME, *PHANTOMJS_VERSION)
         phantomjs_runner_path = File.join(File.dirname(__FILE__), '..', 'assets', 'javascripts', 'jasmine-runner.js')
 
         if defined?(Requirejs)
@@ -15,7 +19,7 @@ module JasmineRails
 
           Capybara::Server.new(Rails.application, 3000, '0.0.0.0').tap do |server|
             server.boot
-            run_cmd %{"#{Phantomjs.path}" "#{phantomjs_runner_path}" "http://127.0.0.1:3000/specs?reporters=console&spec=#{spec_filter}"}
+            run_cmd %{"#{phantom_path}" "#{phantomjs_runner_path}" "http://127.0.0.1:3000/specs?reporters=console&spec=#{spec_filter}"}
           end
         else
 
@@ -27,7 +31,7 @@ module JasmineRails
             runner_path = JasmineRails.tmp_dir.join('runner.html')
             asset_prefix = Rails.configuration.assets.prefix.gsub(/\A\//,'')
             File.open(runner_path, 'w') {|f| f << html.gsub("/#{asset_prefix}", "./#{asset_prefix}")}
-            run_cmd %{"#{Phantomjs.path}" "#{phantomjs_runner_path}" "#{runner_path.to_s}?spec=#{spec_filter}"}
+            run_cmd %{"#{phantom_path}" "#{phantomjs_runner_path}" "#{runner_path.to_s}?spec=#{spec_filter}"}
           end
         end
       end
