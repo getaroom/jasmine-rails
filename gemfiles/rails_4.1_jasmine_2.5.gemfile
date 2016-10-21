@@ -3,7 +3,6 @@
 source "https://rubygems.org"
 
 gem "rails", "~> 4.1"
-gem "byebug", :require => true
 gem "jasmine-core", "~> 2.5.0"
 
 gemspec :path => "../"
