@@ -13,4 +13,4 @@ gem 'rails', '~>4.2.0'
 
 # To use debugger
 # gem 'debugger'
-gem 'byebug', require: true
+# gem 'byebug', require: true

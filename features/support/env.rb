@@ -3,7 +3,6 @@ require 'combustion'
 require 'capybara/cucumber'
 require 'capybara/poltergeist'
 require 'jasmine-rails'
-require 'byebug'
 
 Combustion.initialize! :action_controller, :action_view, :sprockets do
   config.assets.compress = false
