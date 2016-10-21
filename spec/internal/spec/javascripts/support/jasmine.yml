@@ -70,4 +70,4 @@ tmp_dir: "tmp/jasmine"
 # and using an appropriate version of PhantomJS.
 # If however, you wish to manage your own phantom executable you can set:
 #
-# use_phantom_gem: false
+use_phantom_gem: false
