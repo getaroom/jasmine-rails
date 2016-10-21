@@ -27,6 +27,10 @@ module JasmineRails
       files
     end
 
+    def src_files
+      JasmineRails.src_files
+    end
+
     def jasmine_spec_files
       JasmineRails.spec_files
     end
@@ -34,13 +38,8 @@ module JasmineRails
     def jasmine_boot_file
       if JasmineRails.custom_boot
         JasmineRails.custom_boot
-
-      elsif jasmine2?
-        Jasmine::Core.boot_files.first
-
       else
-        'jasmine-boot.js'
-
+        'jasmine2-boot.js'
       end
     end
 
@@ -48,16 +47,29 @@ module JasmineRails
       defined?(Requirejs) ? true : false
     end
 
-    def jasmine2?
-      Jasmine::Core.respond_to?(:boot_files)
-    end
-
     def coverage_exclude_filter
       JasmineRails.coverage_exclude_filter
     end
 
     def coverage_include_filter
-      JasmineRails.coverage_include_filter
+      if JasmineRails.coverage_include_filter.is_a?(Array)
+        safe_join(JasmineRails.coverage_include_filter.map do |src_file|
+          "/#{javascript_path(src_file).gsub(/-[a-z0-9]{64}\.js/, '(.*)?.js')}/"
+        end).tr('"', "'")
+      else
+        JasmineRails.coverage_include_filter
+      end
+    end
+
+    def blanket_js_options
+      options = {
+        :'data-cover-adapter' => javascript_path('jasmine-blanket.js')
+      }
+
+      options[:'data-cover-only']  = coverage_include_filter unless coverage_include_filter.empty?
+      options[:'data-cover-never'] = coverage_exclude_filter unless coverage_exclude_filter.empty?
+
+      options
     end
   end
 end

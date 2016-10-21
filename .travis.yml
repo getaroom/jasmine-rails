@@ -1,7 +1,68 @@
-before_install:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+language: ruby
+before_install: gem install bundler -v 1.12.1
+cache: bundler
+script: "bundle exec rake test"
+rvm:
+  - 1.9.3
+  - 2.1.9
+  - 2.2.4
+  - 2.3.0
 
-install: ''
+gemfile:
+  - gemfiles/rails_3.2_jasmine_2.0.gemfile
+  - gemfiles/rails_3.2_jasmine_2.1.gemfile
+  - gemfiles/rails_3.2_jasmine_2.2.gemfile
+  - gemfiles/rails_3.2_jasmine_2.3.gemfile
+  - gemfiles/rails_3.2_jasmine_2.4.gemfile
+  - gemfiles/rails_3.2_jasmine_2.5.gemfile
+  - gemfiles/rails_4.0_jasmine_2.0.gemfile
+  - gemfiles/rails_4.0_jasmine_2.1.gemfile
+  - gemfiles/rails_4.0_jasmine_2.2.gemfile
+  - gemfiles/rails_4.0_jasmine_2.3.gemfile
+  - gemfiles/rails_4.0_jasmine_2.4.gemfile
+  - gemfiles/rails_4.0_jasmine_2.5.gemfile
+  - gemfiles/rails_4.1_jasmine_2.0.gemfile
+  - gemfiles/rails_4.1_jasmine_2.1.gemfile
+  - gemfiles/rails_4.1_jasmine_2.2.gemfile
+  - gemfiles/rails_4.1_jasmine_2.3.gemfile
+  - gemfiles/rails_4.1_jasmine_2.4.gemfile
+  - gemfiles/rails_4.1_jasmine_2.5.gemfile
+  - gemfiles/rails_4.2_jasmine_2.0.gemfile
+  - gemfiles/rails_4.2_jasmine_2.1.gemfile
+  - gemfiles/rails_4.2_jasmine_2.2.gemfile
+  - gemfiles/rails_4.2_jasmine_2.3.gemfile
+  - gemfiles/rails_4.2_jasmine_2.4.gemfile
+  - gemfiles/rails_4.2_jasmine_2.5.gemfile
+  - gemfiles/rails_5.0_jasmine_2.0.gemfile
+  - gemfiles/rails_5.0_jasmine_2.1.gemfile
+  - gemfiles/rails_5.0_jasmine_2.2.gemfile
+  - gemfiles/rails_5.0_jasmine_2.3.gemfile
+  - gemfiles/rails_5.0_jasmine_2.4.gemfile
+  - gemfiles/rails_5.0_jasmine_2.5.gemfile
 
-script: "./run-tests.sh"
+matrix:
+  exclude:
+    - rvm: 1.9.3
+      gemfile: gemfiles/rails_5.0_jasmine_2.0.gemfile
+    - rvm: 1.9.3
+      gemfile: gemfiles/rails_5.0_jasmine_2.1.gemfile
+    - rvm: 1.9.3
+      gemfile: gemfiles/rails_5.0_jasmine_2.2.gemfile
+    - rvm: 1.9.3
+      gemfile: gemfiles/rails_5.0_jasmine_2.3.gemfile
+    - rvm: 1.9.3
+      gemfile: gemfiles/rails_5.0_jasmine_2.4.gemfile
+    - rvm: 1.9.3
+      gemfile: gemfiles/rails_5.0_jasmine_2.5.gemfile
+    - rvm: 2.1.9
+      gemfile: gemfiles/rails_5.0_jasmine_2.0.gemfile
+    - rvm: 2.1.9
+      gemfile: gemfiles/rails_5.0_jasmine_2.1.gemfile
+    - rvm: 2.1.9
+      gemfile: gemfiles/rails_5.0_jasmine_2.2.gemfile
+    - rvm: 2.1.9
+      gemfile: gemfiles/rails_5.0_jasmine_2.3.gemfile
+    - rvm: 2.1.9
+      gemfile: gemfiles/rails_5.0_jasmine_2.4.gemfile
+    - rvm: 2.1.9
+      gemfile: gemfiles/rails_5.0_jasmine_2.5.gemfile

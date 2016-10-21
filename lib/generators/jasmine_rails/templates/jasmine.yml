@@ -1,7 +1,7 @@
 # path to parent directory of src_files
 # relative path from Rails.root
 # defaults to app/assets/javascripts
-src_dir: "app/assets/javascript"
+src_dir: "app/assets/javascripts"
 
 # path to additional directory of source file that are not part of assets pipeline and need to be included
 # relative path from Rails.root
@@ -49,12 +49,21 @@ spec_files:
 # defaults to tmp/jasmine
 tmp_dir: "tmp/jasmine"
 
-# Custom jasmine boot.js
-# (optional)
-#support_dir: "spec/javascripts/support"
-#boot_script: "rjs-boot.js"
+# Custom jasmine boot.js and support dir
+# (optional) If used both must be specified
+#
+# support_dir: "spec/javascripts/support"
+# boot_script: "rjs-boot.js"
 
+# blanket.js coverage
+# If you are using this with requirejs then you must at least set
+# the include filter
+#
+# include_filter: "//.*/"
+# exclude_filter: ""
 
-#blanket.js coverage
-include_filter: "//.*/"
-exclude_filter: ""
+# By default the PhantomJS gem will be responsible for finding
+# and using an appropriate version of PhantomJS.
+# If however, you wish to manage your own phantom executable you can set:
+#
+# use_phantom_gem: false

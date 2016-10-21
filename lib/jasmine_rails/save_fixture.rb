@@ -14,13 +14,13 @@ require 'fileutils'
 # http://pivotallabs.com/users/jb/blog/articles/1152-javascripttests-bind-reality-
 module JasmineRails
   module SaveFixture
-    FIXTURE_DIRECTORY = 'spec/javascripts/fixtures/generated'
+    FIXTURE_DIRECTORY = 'spec/javascripts/fixtures/generated'.freeze
 
     # Saves the rendered as a fixture file.
-    def save_fixture(file_name, content = rendered)
+    def save_fixture(file_name, content=rendered)
       fixture_path = File.join(Rails.root, FIXTURE_DIRECTORY, file_name)
       fixture_directory = File.dirname(fixture_path)
-      FileUtils.mkdir_p fixture_directory unless File.exists?(fixture_directory)
+      FileUtils.mkdir_p fixture_directory unless File.exist?(fixture_directory)
 
       File.open(fixture_path, 'w') do |file|
         file.puts(content)
@@ -34,7 +34,7 @@ module JasmineRails
     # create .gitignore to exclude generated fixtures from repository
     def ignore_generated_fixtures
       ignore_file = File.join(Rails.root, FIXTURE_DIRECTORY, '../.gitignore')
-      return if File.exists?(ignore_file)
+      return if File.exist?(ignore_file)
       File.open(ignore_file, 'w') do |file|
         file.puts('generated')
       end

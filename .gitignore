@@ -12,3 +12,5 @@ Gemfile.lock
 spec/testbeds
 /gemfiles/*.lock
 /.ruby-version
+.byebug_history
+examples.txt
