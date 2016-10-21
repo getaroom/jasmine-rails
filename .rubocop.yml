@@ -7,6 +7,7 @@ AllCops:
   - 'spec/internal/**/*'
   - 'Gemfile'
   - 'features/step_definitions/*'
+  - 'gemfiles/*'
 
 Metrics/AbcSize:
   Enabled: false
