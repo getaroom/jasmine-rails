@@ -8,6 +8,7 @@ AllCops:
   - 'Gemfile'
   - 'features/step_definitions/*'
   - 'gemfiles/*'
+  - 'vendor/bundle/*'
 
 Metrics/AbcSize:
   Enabled: false
