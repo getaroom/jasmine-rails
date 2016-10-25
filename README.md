@@ -1,8 +1,10 @@
 # jasmine-rails gem
 
-[![Build Status](https://secure.travis-ci.org/searls/jasmine-rails.png)](http://travis-ci.org/searls/jasmine-rails)
+[![Build Status](https://travis-ci.org/getaroom/jasmine-rails.svg?branch=refactor-test-suite)](http://travis-ci.org/getaroom/jasmine-rails)
 
-This project is intended to make it a little easier to integrate [Jasmine](https://github.com/pivotal/jasmine/wiki) into your workflow, particularly if you're working in Rails 3.1 or later. (If you're on earlier versions of Rails, I'd suggest directly using the combination of Pivotal's [jasmine gem](https://github.com/pivotal/jasmine-gem) and [jasmine-headless-webkit](http://johnbintz.github.com/jasmine-headless-webkit/).)
+Fork of @searls [jasmine-rails](https://github.com/searls/jasmine-rails)
+
+This fork is intended to play nice with [requirejs](https://github.com/requirejs/requirejs), and includes @alex-seville's [blanket.js](https://github.com/alex-seville/blanket) for coverage reporting. It leverages [phantomjs](http://phantomjs.org/) headless browser, [capybara](https://github.com/jnicklas/capybara) to create a quick server when running from cli, and of course [jasmine-core](https://github.com/jasmine/jasmine)
 
 By bundling this gem and configuring your project, you can expect to:
 
@@ -16,7 +18,7 @@ By bundling this gem and configuring your project, you can expect to:
 First, add jasmine-rails to your Gemfile, like so
 
     group :test, :development do
-      gem 'jasmine-rails'
+      gem 'jasmine-rails', git: 'https://github.com/getaroom/jasmine-rails'
     end
 
 Next:
@@ -124,24 +126,25 @@ The Jasmine spec runner should appear and start running your testsuite instantly
 
 ## Debugging
 
-### In your browser
+Debuging can be a little tricky because of the way that blanketjs works, I recommend that you add the source file giving you trouble to the `exclude_filter` in `jasmine.yml` and then follow the standard debugging practices found in many articles.
 
-In my workflow, I like to work with specs in the command line until I hit a snag and could benefit from debugging in [Web Inspector](http://www.webkit.org/blog/1091/more-web-inspector-updates/) or [Firebug](http://getfirebug.com/) to figure out what's going on.
+```yml
 
-### From the command line
+exclude_filter: '["application(.*)?.js"]'
+```
 
-Even though they both read from the same config file, it's certainly possible that your specs will pass in the browser and fail from the command line. In this case, you can try to debug or analyze what's going on loading the headless runner.html file into your browser environment. The generated runner.html file is written out to `tmp/jasmine/runner.html` after each run.
+### In your browser 
+
+[Chrome DevTools](https://developers.google.com/web/tools/chrome-devtools/)
+[Firebug](http://getfirebug.com/)
+
+### Command Line Interface
+
+While rare with the way the command line interface is configured to run; Phantomjs connects to a `/specs` being served through a basic capybara server.  There is a possibility that the error could be some form of race condition between phantomjs, your source code and your test. In these cases I generally look to common js lint issues and breaking more complex tests into smaller pieces to find the solution.
 
 ### Ajax / XHRs
 
-As a general rule, Jasmine is designed for unit testing, and as a result real network requests are not appropriate for tests written in Jasmine. (Isolation strategies can include spying on asynchronous libraries and then synchronously testing callback behavior, as [demonstrated in this gist](https://gist.github.com/searls/946704)).
-
-If your application code issues XHR requests during your test run, please note that **XHR requests for the local filesystem** are blocked by default for most browsers for security reasons.  To debug local XHR requests (for example, if you jasmine-jquery fixtures), you will need to enable local filesystem requests in your browser.
-
-Example for Google Chrome (in Mac OS X):
-    open -a "Google Chrome" tmp/jasmine/runner.html --args --allow-file-access-from-files
-
-Again, it's the opinion of the present author that this shouldn't be necessary in any situation but legacy rescue of an existing test suite. With respect specifically to HTML fixtures, please consider [jasmine-fixture](https://github.com/searls/jasmine-fixture) and [my rationale](http://searls.testdouble.com/posts/2011-12-11-jasmine-fixtures.html) for it.
+While I do not recommend AJAX or XHRs they will properly process and be handled.  This is a requirement to use require js, as all src files are loaded via require methods.
 
 ### Custom Helpers
 
@@ -165,9 +168,11 @@ Create a custom layout in app/views/layouts/jasmine_rails/spec_runner.html.erb a
 <%= custom_function %>
 ```
 
-If you wanted to do something like this using [requirejs-rails](https://github.com/jwhitley/requirejs-rails), your helper
-might look like this:
+### Require JS
 
+To use require js add the following to your application
+- make sure that you are using [requirejs-rails](https://github.com/jwhitley/requirejs-rails) or a fork
+- create the following file and add the following
 ```ruby
 # in lib/jasmine_rails/spec_helper.rb
 module JasmineRails
@@ -180,16 +185,7 @@ end
 
 Remove any reference to `src_files` in `spec/javascripts/support/jasmine.yml`, to ensure files aren't loaded prematurely.
 
-The new default layout is designed to allow requirejs to do its job. The only change now required is to enable the custom rjs-boot.js
-
-```yaml
-# in spec/javascripts/support/jasmine.yml
-# Uncomment the following:
-support_dir: "spec/javascripts/support"
-boot_script: "rjs-boot.js"
-```
-
-Use require to any test dependencies.
+Then use require to load any test or src dependencies.
 
 ```javascript
 // spec/javascripts/my-module.spec.js

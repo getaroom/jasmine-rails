@@ -1,6 +1,5 @@
 language: ruby
-before_install: gem install bundler -v 1.12.1
-bundler_args: --path vendor/bundle
+before_install: gem install bundler
 cache: bundler
 script: "bundle exec rake test"
 rvm:
