@@ -3,14 +3,11 @@ Given(/^I open the specs page$/) do
 end
 
 Then(/^I should see "(.*?)"( or "(.*?)")?$/) do |selector, dummy, fallback|
-  if !!fallback
-    begin
-      find(:css, selector)
-    rescue
-      find(:css, fallback)
-    end
-  else
+  begin
     find(:css, selector)
+  rescue
+    find(:css, fallback)
+    raise unless fallback # raise with no arg re-raises the rescued exception
   end
 end
 

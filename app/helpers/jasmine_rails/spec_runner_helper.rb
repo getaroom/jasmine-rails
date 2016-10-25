@@ -54,7 +54,7 @@ module JasmineRails
     def coverage_include_filter
       if JasmineRails.coverage_include_filter.is_a?(Array)
         safe_join(JasmineRails.coverage_include_filter.map do |src_file|
-          "/#{javascript_path(src_file).gsub(/-[a-z0-9]{64}\.js/, '(.*)?.js')}/"
+          "/#{javascript_path(src_file).gsub(/(\.self)?(-[a-z0-9]{64})?\.js/, '(.*)?.js')}/"
         end).tr('"', "'")
       else
         JasmineRails.coverage_include_filter
@@ -62,14 +62,12 @@ module JasmineRails
     end
 
     def blanket_js_options
-      options = {
+      {
         :'data-cover-adapter' => javascript_path('jasmine-blanket.js')
-      }
-
-      options[:'data-cover-only']  = coverage_include_filter unless coverage_include_filter.empty?
-      options[:'data-cover-never'] = coverage_exclude_filter unless coverage_exclude_filter.empty?
-
-      options
+      }.tap do |options|
+        options[:'data-cover-only']  = coverage_include_filter unless coverage_include_filter.empty?
+        options[:'data-cover-never'] = coverage_exclude_filter unless coverage_exclude_filter.empty?
+      end
     end
   end
 end
