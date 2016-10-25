@@ -9,7 +9,7 @@ log
 *.sqlite3
 chromedriver.log
 Gemfile.lock
-/gemfiles/*
+/gemfiles/*.lock
 /.ruby-version
 .byebug_history
 examples.txt
