@@ -11,10 +11,6 @@ module JasmineRails
         template "jasmine.yml", "spec/javascripts/support/jasmine.yml"
       end
 
-      def create_rjs_boot_js
-        template "rjs-boot.js", "spec/javascripts/support/rjs-boot.js"
-      end
-
       def add_routes
         route "mount JasmineRails::Engine => '/specs' if defined?(JasmineRails)"
       end

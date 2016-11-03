@@ -1,5 +1,4 @@
 namespace :spec do
-
   desc "run test with phantomjs"
   task :javascript => [:environment] do
     require 'jasmine_rails/runner'

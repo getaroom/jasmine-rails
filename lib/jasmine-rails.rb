@@ -1,9 +1,14 @@
-require "jasmine_rails/engine"
+require 'jasmine_rails/engine'
 
 module JasmineRails
-  DEFAULT_TMP_DIR = 'tmp/jasmine'
-  CONSOLE_REPORTERS = {'console' => ['jasmine-console-shims.js',
-                                     'jasmine-console-reporter.js']}
+  DEFAULT_TMP_DIR = 'tmp/jasmine/'.freeze
+  CONSOLE_REPORTERS = {
+    'console' => [
+      'jasmine-console-shims.js',
+      'jasmine-console-reporter.js'
+    ]
+  }.freeze
+
   class << self
     # return the relative path to access the spec runner
     # for the host Rails application
@@ -21,41 +26,46 @@ module JasmineRails
       end
     end
 
+    def src_dir
+      path = jasmine_config.fetch 'src_dir', 'app/assets/javascripts'
+      Rails.root.join(path)
+    end
+
     def spec_dir
-      paths = jasmine_config['spec_dir'] || 'spec/javascripts'
-      [paths].flatten.collect { |path| Rails.root.join(path) }
+      paths = jasmine_config.fetch 'spec_dir', 'spec/javascripts'
+      [paths].flatten.map { |path| Rails.root.join(path) }
     end
 
     def include_dir
-      paths = jasmine_config['include_dir']
-      [paths].flatten.compact.collect { |path| Rails.root.join(path) }
+      paths = jasmine_config.fetch 'include_dir', nil
+      [paths].flatten.compact.map { |path| Rails.root.join(path) }
     end
 
     def tmp_dir
-      path = jasmine_config['tmp_dir'] || JasmineRails::DEFAULT_TMP_DIR
+      path = jasmine_config.fetch 'tmp_dir', JasmineRails::DEFAULT_TMP_DIR
       Rails.root.join(path)
     end
 
     def support_dir
-      paths = jasmine_config['support_dir'] || 'support_dir'
-      [paths].flatten.collect { |path| Rails.root.join(path) }
+      paths = jasmine_config.fetch 'support_dir', 'support_dir'
+      [paths].flatten.map { |path| Rails.root.join(path) }
     end
 
     def reporter_files(types_string)
       types = types_string.to_s.split(',')
 
-      reporters = jasmine_config['reporters'] || {}
+      reporters = jasmine_config.fetch 'reporters', {}
       reporters = reporters.merge(JasmineRails::CONSOLE_REPORTERS)
 
       reporters.values_at(*types).compact.flatten
     end
 
     def coverage_include_filter
-      jasmine_config['include_filter'] || '//.*/'
+      jasmine_config.fetch 'include_filter', src_files
     end
 
     def coverage_exclude_filter
-      jasmine_config['exclude_filter'] || ''
+      jasmine_config.fetch 'exclude_filter', ''
     end
 
     # returns list of all files to be included into the jasmine testsuite
@@ -65,11 +75,26 @@ module JasmineRails
     # * spec_files
     def spec_files
       files = []
-      files += filter_files src_dir, jasmine_config['src_files']
+      files += filter_files src_dir, jasmine_config.fetch('src_files', nil)
       spec_dir.each do |dir|
-        files += filter_files dir, jasmine_config['helpers']
-        files += filter_files dir, jasmine_config['spec_files']
+        files += filter_files dir, jasmine_config.fetch('helpers', nil)
+        files += filter_files dir, jasmine_config.fetch('spec_files', nil)
       end
+
+      # Sprockets 4 wants "logical paths" not to include file extensions
+      if defined?(Sprockets) && Sprockets::VERSION.to_f >= 4
+        files = files.map { |f| f.chomp File.extname(f) }
+      end
+
+      files
+    end
+
+    def src_files
+      files = []
+      [src_dir].compact.each do |dir|
+        files += filter_files dir, jasmine_config['src_files']
+      end
+
       files
     end
 
@@ -105,11 +130,11 @@ module JasmineRails
     end
 
     def custom_boot
-      return false if jasmine_config['boot_script'] == nil
-      jasmine_config['boot_script']
+      jasmine_config.fetch 'boot_script', nil
     end
 
-    # use the phantom command from the phantom gem. Set to false if you want to manage your own phantom executable
+    # use the phantom command from the phantom gem.
+    # Set to false if you want to manage your own phantom executable
     def use_phantom_gem?
       jasmine_config['use_phantom_gem'].nil? || jasmine_config['use_phantom_gem'] == true
     end
@@ -117,19 +142,14 @@ module JasmineRails
     private
 
     def css_dir
-      path = jasmine_config['css_dir'] || 'app/assets/stylesheets'
-      Rails.root.join(path)
-    end
-
-    def src_dir
-      path = jasmine_config['src_dir'] || 'app/assets/javascripts'
+      path = jasmine_config.fetch 'css_dir', 'app/assets/stylesheets'
       Rails.root.join(path)
     end
 
     def jasmine_config
       @config ||= begin
         path = Rails.root.join('config', 'jasmine.yml')
-        path = Rails.root.join('spec', 'javascripts', 'support', 'jasmine.yml') unless File.exists?(path)
+        path = Rails.root.join('spec', 'javascripts', 'support', 'jasmine.yml') unless File.exist?(path)
         initialize_jasmine_config_if_absent(path)
         require 'yaml'
         YAML.load_file(path)
@@ -139,22 +159,18 @@ module JasmineRails
     def each_dir(root, &block)
       yield root
       Dir[root + '/*'].each do |file|
-        if File.directory?(file)
-          each_dir(file, &block)
-        end
+        each_dir(file, &block) if File.directory?(file)
       end
     end
 
     def filter_files(root_dir, patterns)
-      files = patterns.to_a.collect do |pattern|
+      files = patterns.to_a.map do |pattern|
         Dir.glob(root_dir.join(pattern)).sort
       end
       files = files.flatten
-      files = files.collect {|f| f.gsub(root_dir.to_s + '/', '') }
+      files = files.map { |f| f.gsub(root_dir.to_s + '/', '') }
       files || []
     end
-
-  private
 
     def initialize_jasmine_config_if_absent(path)
       return if File.exist?(path)

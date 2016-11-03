@@ -1,0 +1,296 @@
+AllCops:
+  DisabledByDefault: true
+  DisplayStyleGuide: true
+  ExtraDetails: true
+Rails:
+  Enabled: true
+
+Lint/ConditionPosition:
+  Enabled: true
+Lint/Debugger:
+  Enabled: true
+Lint/DefEndAlignment:
+  Enabled: true
+Lint/DeprecatedClassMethods:
+  Enabled: true
+Lint/DuplicateMethods:
+  Enabled: true
+Lint/DuplicatedKey:
+  Enabled: true
+Lint/EachWithObjectArgument:
+  Enabled: true
+Lint/ElseLayout:
+  Enabled: true
+Lint/EmptyEnsure:
+  Enabled: true
+Lint/EmptyInterpolation:
+  Enabled: true
+Lint/EndAlignment:
+  # start_of_line once better supported by Style/IndentationWidth
+  AlignWith: variable
+  Enabled: true
+Lint/FloatOutOfRange:
+  Enabled: true
+Lint/FormatParameterMismatch:
+  Enabled: true
+Lint/ImplicitStringConcatenation:
+  Enabled: true
+Lint/IneffectiveAccessModifier:
+  Enabled: true
+Lint/InvalidCharacterLiteral:
+  Enabled: true
+Lint/LiteralInCondition:
+  Enabled: true
+Lint/LiteralInInterpolation:
+  Enabled: true
+Lint/NestedMethodDefinition:
+  Enabled: true
+Lint/ParenthesesAsGroupedExpression:
+  Enabled: true
+Lint/StringConversionInInterpolation:
+  Enabled: true
+Lint/UnderscorePrefixedVariableName:
+  Enabled: true
+Lint/UnreachableCode:
+  Enabled: true
+Lint/UselessAccessModifier:
+  Enabled: true
+Lint/UselessAssignment:
+  Enabled: true
+Lint/UselessElseWithoutRescue:
+  Enabled: true
+Performance/Detect:
+  Enabled: true
+Performance/EndWith:
+  Enabled: true
+Performance/FlatMap:
+  Enabled: true
+Performance/HashEachMethods:
+  Enabled: true
+Performance/LstripRstrip:
+  Enabled: true
+Performance/RangeInclude:
+  Enabled: true
+Performance/RedundantBlockCall:
+  Enabled: true
+Performance/RedundantMatch:
+  Enabled: true
+Performance/RedundantMerge:
+  Enabled: true
+  MaxKeyValuePairs: 1
+Performance/RedundantSortBy:
+  Enabled: true
+Performance/ReverseEach:
+  Enabled: true
+Performance/Sample:
+  Enabled: true
+Performance/StartWith:
+  Enabled: true
+Rails/Delegate:
+  Enabled: true
+Rails/Output:
+  Enabled: true
+  Exclude:
+    - 'db/seeds.rb'
+    - 'lib/recipes/**/*.rb'
+Rails/PluralizationGrammar:
+  Enabled: true
+Style/AccessModifierIndentation:
+  Enabled: true
+Style/ArrayJoin:
+  Enabled: true
+Style/Attr:
+  Enabled: true
+Style/BarePercentLiterals:
+  Enabled: true
+Style/BlockComments:
+  Enabled: true
+Style/CaseIndentation:
+  Enabled: true
+  IndentWhenRelativeTo: end
+Style/CharacterLiteral:
+  Enabled: true
+Style/ClassAndModuleCamelCase:
+  Enabled: true
+Style/ClassMethods:
+  Enabled: true
+Style/CollectionMethods:
+  Enabled: true
+  PreferredMethods:
+    detect: detect
+Style/ColonMethodCall:
+  Enabled: true
+Style/CommentIndentation:
+  Enabled: true
+Style/ConstantName:
+  Enabled: true
+Style/PreferredHashMethods:
+  Enabled: true
+Style/EachWithObject:
+  Enabled: true
+Style/ElseAlignment:
+  Enabled: true
+Style/EmptyElse:
+  Enabled: true
+Style/EmptyLineBetweenDefs:
+  Enabled: true
+Style/EmptyLines:
+  Enabled: true
+Style/EmptyLinesAroundAccessModifier:
+  Enabled: true
+Style/EmptyLinesAroundBlockBody:
+  Enabled: true
+Style/EmptyLinesAroundClassBody:
+  Enabled: true
+Style/EmptyLinesAroundMethodBody:
+  Enabled: true
+Style/EmptyLinesAroundModuleBody:
+  Enabled: true
+Style/EmptyLiteral:
+  Enabled: true
+Style/EndOfLine:
+  Enabled: true
+Style/EvenOdd:
+  Enabled: true
+Style/FileName:
+  Enabled: false
+Style/For:
+  Enabled: true
+Style/IdenticalConditionalBranches:
+  Enabled: true
+Style/IfInsideElse:
+  Enabled: true
+Style/IfUnlessModifier:
+  Enabled: true
+Style/IfWithSemicolon:
+  Enabled: true
+Style/IndentationConsistency:
+  Enabled: true
+Style/IndentationWidth:
+  Enabled: true
+Style/InitialIndentation:
+  Enabled: true
+Style/LeadingCommentSpace:
+  Enabled: true
+Style/MethodCallParentheses:
+  Enabled: true
+Style/MethodDefParentheses:
+  Enabled: true
+Style/MethodName:
+  Enabled: true
+Style/MultilineIfThen:
+  Enabled: true
+Style/MultilineTernaryOperator:
+  Enabled: true
+Style/MutableConstant:
+  Enabled: true
+Style/NegatedIf:
+  Enabled: true
+Style/NegatedWhile:
+  Enabled: true
+Style/NestedModifier:
+  Enabled: true
+Style/NestedTernaryOperator:
+  Enabled: true
+Style/OptionalArguments:
+  Enabled: true
+Style/ParenthesesAroundCondition:
+  Enabled: true
+Style/PercentLiteralDelimiters:
+  Enabled: true
+  PreferredDelimiters:
+    '%':  '{}'
+    '%q': '{}'
+    '%Q': '{}'
+Style/RedundantBegin:
+  Enabled: true
+Style/RedundantException:
+  Enabled: true
+Style/RedundantFreeze:
+  Enabled: true
+Style/RedundantParentheses:
+  Enabled: true
+Style/RedundantReturn:
+  Enabled: true
+Style/RedundantSelf:
+  Enabled: true
+Style/RescueEnsureAlignment:
+  Enabled: true
+Style/SelfAssignment:
+  Enabled: true
+Style/Semicolon:
+  AllowAsExpressionSeparator: true
+  Enabled: true
+Style/SingleLineMethods:
+  AllowIfMethodIsEmpty: false
+  Enabled: true
+Style/SpaceAfterColon:
+  Enabled: true
+Style/SpaceAfterComma:
+  Enabled: true
+Style/SpaceAfterMethodName:
+  Enabled: true
+Style/SpaceAfterNot:
+  Enabled: true
+Style/SpaceAfterSemicolon:
+  Enabled: true
+Style/SpaceAroundBlockParameters:
+  Enabled: true
+Style/SpaceAroundEqualsInParameterDefault:
+  Enabled: true
+  EnforcedStyle: no_space
+Style/SpaceAroundKeyword:
+  Enabled: true
+Style/SpaceAroundOperators:
+  Enabled: true
+Style/SpaceBeforeBlockBraces:
+  Enabled: true
+Style/SpaceBeforeComma:
+  Enabled: true
+Style/SpaceBeforeComment:
+  Enabled: true
+Style/SpaceBeforeFirstArg:
+  Enabled: true
+Style/SpaceBeforeSemicolon:
+  Enabled: true
+Style/SpaceInsideBrackets:
+  Enabled: true
+Style/SpaceInsideParens:
+  Enabled: true
+Style/SpaceInsideRangeLiteral:
+  Enabled: true
+Style/SpaceInsideStringInterpolation:
+  Enabled: true
+Style/StructInheritance:
+  Enabled: true
+Style/SymbolLiteral:
+  Enabled: true
+Style/SymbolProc:
+  Enabled: true
+  Exclude:
+    - 'factories/**/*.rb'
+  IgnoredMethods:
+    - create_table
+    - respond_to
+Style/Tab:
+  Enabled: true
+Style/TrailingBlankLines:
+  Enabled: true
+Style/TrailingWhitespace:
+  Enabled: true
+Style/TrivialAccessors:
+  Enabled: true
+Style/UnlessElse:
+  Enabled: true
+Style/UnneededCapitalW:
+  Enabled: true
+Style/UnneededInterpolation:
+  Enabled: true
+Style/VariableInterpolation:
+  Enabled: true
+Style/VariableName:
+  Enabled: true
+Style/WhenThen:
+  Enabled: true
+Style/ZeroLengthPredicate:
+  Enabled: true
