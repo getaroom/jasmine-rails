@@ -6,7 +6,7 @@ require "jasmine_rails/version"
 # Describe your gem and declare its dependencies:
 Gem::Specification.new do |s|
   s.name        = "jasmine-rails"
-  s.version     = JasmineRails::VERSION
+  s.version     = JasmineRails::VERSION.dup
   s.authors     = ["Justin Searls", "Mark Van Holstyn", "Cory Flanigan"]
   s.email       = ["searls@gmail.com", "mvanholstyn@gmail.com", "seeflanigan@gmail.com"]
   s.homepage    = "http://github.com/searls/jasmine-rails"
