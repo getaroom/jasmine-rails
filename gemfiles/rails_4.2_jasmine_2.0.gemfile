@@ -2,8 +2,8 @@
 
 source "https://rubygems.org"
 
+gem "public_suffix", "< 1.5"
 gem "rails", "~> 4.2.0"
-gem "public_suffix", "~> 1.4.6"
 gem "jasmine-core", "~> 2.0.0"
 
 gemspec :path => "../"
